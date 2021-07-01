@@ -27,9 +27,23 @@ class Car
   def get_date
     @date
   end
+
+  def info
+    p "lable: #{@lable}"
+    p "type: #{@type}"
+    p "date: #{@date}"
+  end
 end
 
 car1 = Car.new
 car1.set_lable("УАЗ")
 car1.set_type("Грузовой")
 car1.set_date(1980)
+
+car2 = Car.new
+car2.set_lable("Волга")
+car2.set_type("Легковой")
+car2.set_date(2000)
+
+car1.info
+car2.info
