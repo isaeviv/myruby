@@ -1,4 +1,36 @@
 require 'pry'
+
+class Kot
+	attr_accessor :coded, :double_coded, :type
+
+	@double_coded = 0b1 
+	@double_coded <<= 22
+
+	def set_type(x)
+		@type = x
+		case @type
+		when "point"
+			add_attr @double_coded , 0, 20
+		when "circle"
+			add_attr @double_coded , 1, 20
+		when "triangle"
+			add_attr @double_coded , 2, 20
+		when "square"
+			add_attr @double_coded , 3, 20
+		else
+			puts "Фигура '#{@type}' не расспознана, проверте правильность написания..."
+		end
+
+		return @double_coded	
+	end
+
+	def add_attr(figura, attr, rank)
+		@double_coded = figura
+		@double_coded |= attr << rank
+	end
+end
+binding.pry
+
 about_program = <<~here
 			----------------------------------------------------------------------
 			Программа кодирует данные о геометрической фигуре в целое число.
