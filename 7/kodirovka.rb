@@ -1,36 +1,67 @@
 require 'pry'
 
 class Kot
-	attr_accessor :coded, :double_coded, :type
+	attr_accessor :coded, :type, :x, :y, :color
 
-	@double_coded = 0b1 
-	@double_coded <<= 22
+	COLORS = {red: 0, orange: 1, yellow: 2 , green: 3, blue: 4, dark_blue: 5, violet: 6}
+	TYPES = {point: 0, circle: 1, triangle: 2, square: 3}
 
-	def set_type(x)
-		@type = x
-		case @type
-		when "point"
-			add_attr @double_coded , 0, 20
-		when "circle"
-			add_attr @double_coded , 1, 20
-		when "triangle"
-			add_attr @double_coded , 2, 20
-		when "square"
-			add_attr @double_coded , 3, 20
+	def initialize
+		@coded = 0b1 << 22
+		@type = ""
+		@x = 0
+		@y = 0
+		@color = ""
+	end
+
+	def set_type(type)
+		@type = type.to_sym
+
+		if Kot::TYPES.key? @type
+			add_attr Kot::TYPES[@type], 20
 		else
 			puts "Фигура '#{@type}' не расспознана, проверте правильность написания..."
 		end
 
-		return @double_coded	
 	end
 
-	def add_attr(figura, attr, rank)
-		@double_coded = figura
-		@double_coded |= attr << rank
+	def set_x(x)
+		@x = x
+		add_attr @x, 12
 	end
+
+	def set_y(y)
+		@y = y
+		add_attr @y, 4
+	end
+
+	def set_color(color)
+		@color = color.to_sym
+		
+		if Kot::COLORS.key? @color
+			add_attr Kot::COLORS[@color], 0
+		else
+			puts "Цвет '#{@color}' не расспозна, проверте правильность написания..."
+		end
+	end		
+
+	def add_attr(attr, rank)
+		#attr = attr.to_sym
+		@coded |= attr << rank
+	end
+
+	def double_coded
+		dc = @coded
+		'%b' %dc
+	end
+
 end
+a = Kot.new
 binding.pry
 
+
+
+=begin
 about_program = <<~here
 			----------------------------------------------------------------------
 			Программа кодирует данные о геометрической фигуре в целое число.
@@ -94,4 +125,17 @@ p "Фигура #{figura} %b" %figura
 
 
 
+case @type
+		when "point"
+			add_attr 0, 20
+		when "circle"
+			add_attr 1, 20
+		when "triangle"
+			add_attr 2, 20
+		when "square"
+			add_attr 3, 20
+		else
+			puts "Фигура '#{@type}' не расспознана, проверте правильность написания..."
+		end
 
+=end
