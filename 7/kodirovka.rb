@@ -45,6 +45,14 @@ class Kot
 		end
 	end		
 
+	def code_figure(type , x , y , color)
+		set_type type
+		set_x x
+		set_y y
+		set_color color
+		double_coded
+	end
+
 	def add_attr(attr, rank)
 		#attr = attr.to_sym
 		@coded |= attr << rank
@@ -90,27 +98,6 @@ about_program = <<~here
 
 puts about_program
 
-print "Тип фигуры: "
-type = gets.chomp
-type = type.to_i
-
-print "Координата Х фигуры: "
-x = gets.chomp
-x = x.to_i
-
-print "Координата У фигуры: "
-y = gets.chomp
-y = y.to_i
-
-print "Цвет фигуры: "
-color = gets.chomp
-color = color.to_i
-
-figura = 1
-figura <<= 22
-
-
-
 figura |= type << 20
 
 figura |= x << 12
@@ -118,24 +105,4 @@ figura |= x << 12
 figura |= y << 4
 
 figura |= color
-
-
-p "Фигура #{figura} %b" %figura
-
-
-
-
-case @type
-		when "point"
-			add_attr 0, 20
-		when "circle"
-			add_attr 1, 20
-		when "triangle"
-			add_attr 2, 20
-		when "square"
-			add_attr 3, 20
-		else
-			puts "Фигура '#{@type}' не расспознана, проверте правильность написания..."
-		end
-
 =end
